@@ -9,19 +9,18 @@
 
 ## 📌 Executive Summary
 This repository contains my first **Prompt Engineering project**, developed during my internship at **ZeTheta Algorithm Private Limited**.  
-The project demonstrates the application of advanced prompt engineering methodologies to design a **personal wealth management system** that integrates **multi-bank account aggregation (Mint)** with **automated investment advice (Betterment)**:contentReference[oaicite:3]{index=3}.  
-
+The project demonstrates the application of advanced prompt engineering methodologies to design a **personal wealth management system** that integrates **multi-bank account aggregation (Mint)** with **automated investment advice (Betterment)**
 ---
 
 ## 🎯 Objectives
-- Apply the **Breakdown Problem Structure** to decompose a FinTech system into manageable components:contentReference[oaicite:4]{index=4}.  
-- Implement the **Financial Prompt Framework (FPF)** and the **Multilayer Prompt Strategy (MPF)** to ensure compliance, scalability, and traceability:contentReference[oaicite:5]{index=5}:contentReference[oaicite:6]{index=6}.  
+- Apply the **Breakdown Problem Structure** to decompose a FinTech system into manageable components.
+- Implement the **Financial Prompt Framework (FPF)** and the **Multilayer Prompt Strategy (MPF)** to ensure compliance, scalability, and traceability.
 - Deliver a **complete and documented repository** as a professional and educational reference.  
 
 ---
 
 ## 🧩 Methodology
-The project follows a strict **prompt architecture sequence**:contentReference[oaicite:7]{index=7}:  
+The project follows a strict **prompt architecture sequence**  
 1. **Meta Prompt**  
 2. **Financial Prompt Framework (FPF)**  
 3. **Multilayer Prompt Strategy (MPF)**  
@@ -30,12 +29,12 @@ The project follows a strict **prompt architecture sequence**:contentReference[o
 - **Step 1 – Architecture**: secure design, APIs, DB schemas.  
 - **Step 2 – Backend Logic**: categorization engine, budget, investment algorithms.  
 - **Step 3 – Frontend/UI**: financial data visualization, mobile design.  
-- **Step 4 – Integration/Security**: MFA, encryption, fraud detection:contentReference[oaicite:8]{index=8}.  
+- **Step 4 – Integration/Security**: MFA, encryption, fraud detection.  
 
 ### Multilayer Prompt Strategy
 - **Layer 1 – Strategic Prompts**: Define architecture, schemas, APIs.  
 - **Layer 2 – Development Prompts**: Generate MPT, Categorization, Tax-Loss modules.  
-- **Layer 3 – Refinement Prompts**: Implement security, generate tests, configure deployment:contentReference[oaicite:9]{index=9}.  
+- **Layer 3 – Refinement Prompts**: Implement security, generate tests, configure deployment.  
 
 ---
 

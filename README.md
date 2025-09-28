@@ -5,52 +5,51 @@
 [![Methodology: FPF](https://img.shields.io/badge/Methodology-FPF%20%2B%20MultiLayer-orange)]()
 [![Status: Internship Project](https://img.shields.io/badge/Status-Completed%20(ZeTheta)-informational)]()
 
-## 📌 Executive Summary
-This repository showcases my first **Prompt Engineering project** completed during my internship at **ZeTheta Algorithm Private Limited**.  
-The project applies advanced **problem breakdown** and **multi-layer prompt strategy** methodologies to build a **personal wealth management application** combining features of Mint (account aggregation) and Betterment (automated investment advice).  
+# 🏦 Prompt Engineering Project – Personal Wealth Management App (Mint + Betterment)
 
-The goal is to demonstrate **best practices in Prompt Engineering** through structured documentation, practical examples, testing validation, and iterative refinement.
+## 📌 Executive Summary
+This repository contains my first **Prompt Engineering project**, developed during my internship at **ZeTheta Algorithm Private Limited**.  
+The project demonstrates the application of advanced prompt engineering methodologies to design a **personal wealth management system** that integrates **multi-bank account aggregation (Mint)** with **automated investment advice (Betterment)**:contentReference[oaicite:3]{index=3}.  
 
 ---
 
 ## 🎯 Objectives
-- Apply **Breakdown Problem Structure** to decompose a complex FinTech system into manageable prompt-driven tasks:contentReference[oaicite:3]{index=3}.
-- Implement a **Multi-Layer Prompt Framework** to ensure scalability, traceability, and compliance:contentReference[oaicite:4]{index=4}.
-- Deliver a **complete, professional repository** that can serve both as a **portfolio piece** and as a **teaching example** in prompt engineering.
+- Apply the **Breakdown Problem Structure** to decompose a FinTech system into manageable components:contentReference[oaicite:4]{index=4}.  
+- Implement the **Financial Prompt Framework (FPF)** and the **Multilayer Prompt Strategy (MPF)** to ensure compliance, scalability, and traceability:contentReference[oaicite:5]{index=5}:contentReference[oaicite:6]{index=6}.  
+- Deliver a **complete and documented repository** as a professional and educational reference.  
 
 ---
 
 ## 🧩 Methodology
+The project follows a strict **prompt architecture sequence**:contentReference[oaicite:7]{index=7}:  
+1. **Meta Prompt**  
+2. **Financial Prompt Framework (FPF)**  
+3. **Multilayer Prompt Strategy (MPF)**  
 
-### 1. Problem Breakdown
-- Analysis of functional and technical requirements.
-- Mapping dependencies across architecture, backend, frontend, and security layers.
-- Application of the **Financial Prompt Framework (FPF)** for domain-specific compliance.
+### Breakdown Problem Structure
+- **Step 1 – Architecture**: secure design, APIs, DB schemas.  
+- **Step 2 – Backend Logic**: categorization engine, budget, investment algorithms.  
+- **Step 3 – Frontend/UI**: financial data visualization, mobile design.  
+- **Step 4 – Integration/Security**: MFA, encryption, fraud detection:contentReference[oaicite:8]{index=8}.  
 
-### 2. Multi-Layer Prompt Strategy
-- **Layer 1 – Strategic Prompts**: Define architecture, database schemas, and APIs.
-- **Layer 2 – Development Prompts**: Implement core financial logic (MPT, Tax-Loss Harvesting, Categorization Engine).
-- **Layer 3 – Refinement Prompts**: Security, testing, compliance validation, and CI/CD integration.
+### Multilayer Prompt Strategy
+- **Layer 1 – Strategic Prompts**: Define architecture, schemas, APIs.  
+- **Layer 2 – Development Prompts**: Generate MPT, Categorization, Tax-Loss modules.  
+- **Layer 3 – Refinement Prompts**: Implement security, generate tests, configure deployment:contentReference[oaicite:9]{index=9}.  
 
-📄 Full methodology documentation is available in:
+---
+
+## 📚 Documentation
+- [`/docs/introduction.md`](docs/introduction.md)  
 - [`/docs/breakdown_problem_structure.md`](docs/breakdown_problem_structure.md)  
 - [`/docs/multilayer_prompt_strategy.md`](docs/multilayer_prompt_strategy.md)  
 
 ---
 
-## 🧪 Testing & Validation
-Testing ensures correctness of prompt outputs and traceability in financial logic:
-- [`/testing_validation/test_plan.md`](testing_validation/test_plan.md)  
-- [`/testing_validation/validation_results.md`](testing_validation/validation_results.md)  
-- Automated scripts (`unit_tests.py`) for reproducibility.
-
----
-
-## 🌀 Iterations & Scalability
-The repository documents project evolution:
-- [`v1_initial.md`](iterations/v1_initial.md) → First draft prompts and raw outputs.
-- [`v2_refined.md`](iterations/v2_refined.md) → Improved results after structured iterations.
-- [`scalability_notes.md`](iterations/scalability_notes.md) → Future roadmap for larger deployments.
+## 🧪 Testing & Iterations
+Validation and iterative improvements are documented in:  
+- [`/testing_validation`](testing_validation/)  
+- [`/iterations`](iterations/)  
 
 ---
 
@@ -78,3 +77,30 @@ The document must include:
 2. Key Database Schemas (User, Transaction, Recommendation), detailing hashing (Bcrypt) and encrypted fields (AES-256).
 ...
 """
+```
+
+## 📂 Repository Structure
+
+```bash
+📂 Prompt-Engineering-Project
+┣ 📜 README.md
+┣ 📂 docs
+┃ ┣ 📜 introduction.md
+┃ ┣ 📜 breakdown_problem_structure.md
+┃ ┗ 📜 multilayer_prompt_strategy.md
+┣ 📂 examples
+┃ ┣ 📜 prompt_case1.md
+┃ ┣ 📜 prompt_case2.md
+┃ ┗ 📜 generated_outputs.md
+┣ 📂 testing_validation
+┃ ┣ 📜 test_plan.md
+┃ ┣ 📜 validation_results.md
+┃ ┗ 📜 unit_tests.py
+┣ 📂 iterations
+┃ ┣ 📜 v1_initial.md
+┃ ┣ 📜 v2_refined.md
+┃ ┗ 📜 scalability_notes.md
+┗ 📂 assets
+  ┗ 📜 diagrams.png
+```
+

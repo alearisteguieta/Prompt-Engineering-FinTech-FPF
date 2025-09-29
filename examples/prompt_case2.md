@@ -52,7 +52,7 @@ CONFIRMATION MESSAGE
 
 ## Sample JSON Output (OptimizationResult‑compatible)
 
-This example mirrors the structure referenced by `/portfolio/optimization` in `API_Specifications.yaml`.
+This example mirrors the structure referenced by `/portfolio/optimization` in `API_Specifications.json`.
 
 ```json
 {

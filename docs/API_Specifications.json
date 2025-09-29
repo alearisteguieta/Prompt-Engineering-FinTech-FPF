@@ -1,218 +1,319 @@
-openapi: 3.0.3
-info:
-title: Personal Wealth Management API (FinTech)
-description: |
-API Gateway specification for the Mint + Betterment application, following a Microservices architecture.
-This specification is a direct deliverable from the Layer 1: Strategic Architecture Prompt and defines the required structure for the code generation in Layer 2.
-version: 1.0.0
-servers:
-
-url: https://www.google.com/search?q=https://api.prod.wealthapp.com/v1
-description: Production Environment
-
-url: http://localhost:8080/v1
-description: Development Environment
-
---- SECURITY ---
-security:
-
-BearerAuth: []
-
-paths:
-/users/me:
-get:
-tags:
-- User Management
-summary: Retrieve the authenticated user's profile.
-operationId: getCurrentUser
-responses:
-'200':
-description: User profile retrieved successfully.
-content:
-application/json:
-schema:
-$ref: '#/components/schemas/User'
-put:
-tags:
-- User Management
-summary: Update user settings (requires MFA enforcement on the API Gateway).
-operationId: updateUser
-requestBody:
-required: true
-content:
-application/json:
-schema:
-$ref: '#/components/schemas/UserUpdate'
-responses:
-'200':
-description: User profile updated.
-
-/transactions:
-get:
-tags:
-- Transactions
-summary: Retrieve a list of aggregated transactions for the user.
-operationId: listTransactions
-parameters:
-- name: account_id
-in: query
-required: false
-schema:
-type: string
-description: Filter transactions by linked financial account ID.
-responses:
-'200':
-description: A list of transactions.
-content:
-application/json:
-schema:
-type: array
-items:
-$ref: '#/components/schemas/Transaction'
-post:
-tags:
-- Transactions
-summary: Manually record a transaction and trigger ML categorization.
-operationId: createTransaction
-requestBody:
-required: true
-content:
-application/json:
-schema:
-$ref: '#/components/schemas/TransactionInput'
-responses:
-'201':
-description: Transaction created and categorization request queued.
-
-/portfolio/optimization:
-post:
-tags:
-- Investment Portfolio
-summary: Run the Modern Portfolio Theory (MPT) optimization engine.
-operationId: runPortfolioOptimization
-requestBody:
-required: true
-content:
-application/json:
-schema:
-$ref: '#/components/schemas/OptimizationRequest'
-responses:
-'202':
-description: Optimization request accepted and processing started (async).
-content:
-application/json:
-schema:
-$ref: '#/components/schemas/OptimizationResult'
-'400':
-description: Invalid risk profile or missing data.
-
---- DATA SCHEMAS ---
-components:
-securitySchemes:
-BearerAuth:
-type: http
-scheme: bearer
-bearerFormat: JWT
-
-schemas:
-User:
-type: object
-properties:
-user_id:
-type: string
-description: Unique user identifier.
-email:
-type: string
-format: email
-first_name:
-type: string
-last_name:
-type: string
-# Financial Data is stored in encrypted fields in the DB (AES-256)
-risk_profile:
-type: string
-enum: [Conservative, Moderate, Aggressive]
-description: User's selected investment risk profile.
-required:
-- user_id
-- email
-
-Transaction:
-  type: object
-  properties:
-    transaction_id:
-      type: string
-    account_id:
-      type: string
-      description: ID of the linked financial account (via Plaid).
-    date:
-      type: string
-      format: date
-    amount:
-      type: number
-      format: float
-    description:
-      type: string
-    ml_category:
-      type: string
-      description: Category assigned by the Expense Categorization ML Engine.
-    # Note: Raw merchant data is masked for display due to PCI DSS context.
-  required:
-    - transaction_id
-    - account_id
-    - date
-    - amount
-
-TransactionInput:
-  type: object
-  properties:
-    account_id:
-      type: string
-    date:
-      type: string
-      format: date
-    amount:
-      type: number
-      format: float
-    description:
-      type: string
-  required:
-    - account_id
-    - date
-    - amount
-    - description
-
-OptimizationRequest:
-  type: object
-  properties:
-    strategy:
-      type: string
-      enum: [Maximize_Sharpe, Minimize_Volatility, Tax_Loss_Harvesting]
-      description: Optimization goal (MPT or TLH).
-    target_return:
-      type: number
-      format: float
-      description: Optional target return for portfolio (e.g., 0.10 for 10%).
-    portfolio_assets:
-      type: array
-      items:
-        type: string
-      description: List of current asset symbols (e.g., 'VOO', 'BND').
-  required:
-    - strategy
-    - portfolio_assets
-
-OptimizationResult:
-  type: object
-  properties:
-    request_id:
-      type: string
-      description: Unique ID for the asynchronous job.
-    status:
-      type: string
-      enum: [Pending, In_Progress, Complete, Failed]
-    optimal_weights:
-      type: object
-      description: Key-value pairs of asset symbol and optimal weight (e.g., {"VOO": 0.60, "BND": 0.40}).
-
-## “Complete endpoint catalog in the full documentation.”
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Personal Wealth Management API (FinTech)",
+    "description": "API Gateway specification for the Mint + Betterment application, following a Microservices architecture.\nThis specification is a direct deliverable from the Layer 1: Strategic Architecture Prompt and defines the required structure for the code generation in Layer 2.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://www.google.com/search?q=https://api.prod.wealthapp.com/v1",
+      "description": "Production Environment"
+    },
+    {
+      "url": "http://localhost:8080/v1",
+      "description": "Development Environment"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "description": "User profile. Financial data fields are stored encrypted in DB (AES-256).",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "Unique user identifier."
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "risk_profile": {
+            "type": "string",
+            "enum": [
+              "Conservative",
+              "Moderate",
+              "Aggressive"
+            ],
+            "description": "User's selected investment risk profile."
+          }
+        },
+        "required": [
+          "user_id",
+          "email"
+        ]
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "transaction_id": {
+            "type": "string"
+          },
+          "account_id": {
+            "type": "string",
+            "description": "ID of the linked financial account (via Plaid)."
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "amount": {
+            "type": "number",
+            "format": "float"
+          },
+          "description": {
+            "type": "string"
+          },
+          "ml_category": {
+            "type": "string",
+            "description": "Category assigned by the Expense Categorization ML Engine."
+          }
+        },
+        "required": [
+          "transaction_id",
+          "account_id",
+          "date",
+          "amount"
+        ],
+        "description": "Transaction record. Note: Raw merchant data is masked for display due to PCI DSS context."
+      },
+      "TransactionInput": {
+        "type": "object",
+        "properties": {
+          "account_id": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "amount": {
+            "type": "number",
+            "format": "float"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "account_id",
+          "date",
+          "amount",
+          "description"
+        ]
+      },
+      "OptimizationRequest": {
+        "type": "object",
+        "properties": {
+          "strategy": {
+            "type": "string",
+            "enum": [
+              "Maximize_Sharpe",
+              "Minimize_Volatility",
+              "Tax_Loss_Harvesting"
+            ],
+            "description": "Optimization goal (MPT or TLH)."
+          },
+          "target_return": {
+            "type": "number",
+            "format": "float",
+            "description": "Optional target return for portfolio (e.g., 0.10 for 10%)."
+          },
+          "portfolio_assets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of current asset symbols (e.g., 'VOO', 'BND')."
+          }
+        },
+        "required": [
+          "strategy",
+          "portfolio_assets"
+        ]
+      },
+      "OptimizationResult": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "description": "Unique ID for the asynchronous job."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "In_Progress",
+              "Complete",
+              "Failed"
+            ]
+          },
+          "optimal_weights": {
+            "type": "object",
+            "description": "Key-value pairs of asset symbol and optimal weight (e.g., {\"VOO\": 0.60, \"BND\": 0.40}).",
+            "additionalProperties": {
+              "type": "number",
+              "format": "float"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/users/me": {
+      "get": {
+        "tags": [
+          "User Management"
+        ],
+        "summary": "Retrieve the authenticated user's profile.",
+        "operationId": "getCurrentUser",
+        "responses": {
+          "200": {
+            "description": "User profile retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User Management"
+        ],
+        "summary": "Update user settings (requires MFA enforcement on the API Gateway).",
+        "operationId": "updateUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User profile updated."
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Retrieve a list of aggregated transactions for the user.",
+        "operationId": "listTransactions",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter transactions by linked financial account ID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of transactions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Transaction"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Manually record a transaction and trigger ML categorization.",
+        "operationId": "createTransaction",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Transaction created and categorization request queued."
+          }
+        }
+      }
+    },
+    "/portfolio/optimization": {
+      "post": {
+        "tags": [
+          "Investment Portfolio"
+        ],
+        "summary": "Run the Modern Portfolio Theory (MPT) optimization engine.",
+        "operationId": "runPortfolioOptimization",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptimizationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Optimization request accepted and processing started (async).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptimizationResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid risk profile or missing data."
+          }
+        }
+      }
+    }
+  },
+  "description": "Complete endpoint catalog in the full documentation."
+}

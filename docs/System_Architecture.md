@@ -61,4 +61,4 @@ The architecture is designed to meet strict FinTech operational metrics:
 | **ML/Data** | Scikit-learn / TensorFlow, AWS S3 | Expense Categorization Model and artifact storage. |
 | **Integration** | Plaid API | Bank account and transaction aggregation. |
 
-For the visual representation, please refer to the image: **`(https://github.com/alearisteguieta/Prompt-Engineering-FinTech-FPF/edit/main/assets/diagrams.md)`**.
+For the visual representation, please refer to the image: [diagrams](https://github.com/alearisteguieta/Prompt-Engineering-FinTech-FPF/blob/7c8fe72e404fb915bba32424021ba36de793b102/assets/diagrams.md)

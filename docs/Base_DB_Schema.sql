@@ -3,6 +3,7 @@
 -- Purpose: Defines the core data structure to support Account Aggregation (Mint)
 -- and Automated Investment Advisory (Betterment) logic.
 -- Database: PostgreSQL is recommended for UUIDs and JSONB support.
+-- Encrypted fields present in the full version of the documents supplied in the repository" (encrypted_first_name, encrypted_last_name, encrypted_metadata) 
 
 --------------------------------------------------------------------------------
 -- 1. USERS Table (Client Profiles)

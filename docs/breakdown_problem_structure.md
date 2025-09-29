@@ -1,7 +1,7 @@
 # Breakdown Problem Structure
 
 ## Central Objective
-Develop a system that combines **account aggregation (Mint)** with **automated investment advisory (Betterment)**:contentReference[oaicite:12]{index=12}.  
+Develop a system that combines **account aggregation (Mint)** with **automated investment advisory (Betterment)**.  
 
 ---
 
@@ -18,4 +18,4 @@ Develop a system that combines **account aggregation (Mint)** with **automated i
 ## Methodology Requirements
 - Strict use of **Financial Prompt Framework (FPF)**.  
 - Application of the **Multilayer Prompt Strategy (MPF)**.  
-- Exhaustive documentation and modular organization:contentReference[oaicite:13]{index=13}.  
+- Exhaustive documentation and modular organization.  

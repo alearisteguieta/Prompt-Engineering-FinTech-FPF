@@ -21,7 +21,7 @@
 * Contents: curated excerpts, examples, and essential specifications.
 * Full Content: detailed documentation, full prompts, end-to-end traceability, tests, and results.
 * To review the full project documentation, visit:
-Full Documentation: [Public link to Notion or documentation site]
+Full Documentation: [[Github Page](https://alearisteguieta.github.io/Prompt-Engineering-FinTech-FPF/)]
 * Notes:
 - This repository does not include sensitive data or credentials.
 - Some sections have been simplified for space, privacy, and pedagogical clarity.

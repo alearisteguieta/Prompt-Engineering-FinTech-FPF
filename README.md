@@ -24,7 +24,7 @@
 * To review the full project documentation, visit:
 [[Full Documentation](https://alearisteguieta.github.io/Prompt-Engineering-FinTech-FPF/)]
 
-* Notes:
+### Notes:
 - This repository does not include sensitive data or credentials.
 - Some sections have been simplified for space, privacy, and pedagogical clarity.
 

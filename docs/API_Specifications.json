@@ -214,3 +214,5 @@ OptimizationResult:
     optimal_weights:
       type: object
       description: Key-value pairs of asset symbol and optimal weight (e.g., {"VOO": 0.60, "BND": 0.40}).
+
+## “Complete endpoint catalog in the full documentation.”

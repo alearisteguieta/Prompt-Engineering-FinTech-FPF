@@ -1,11 +1,9 @@
-# Personal Wealth Management LLM Orchestration (FinTech Prompt Engineering)
+# 🏦 Personal Wealth Management LLM Orchestration (FinTech Prompt Engineering)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Technology: Python](https://img.shields.io/badge/Python-3.10%2B-blue)]()
 [![Methodology: FPF](https://img.shields.io/badge/Methodology-FPF%20%2B%20MultiLayer-orange)]()
 [![Status: Internship Project](https://img.shields.io/badge/Status-Completed%20(ZeTheta)-informational)]()
-
-# 🏦 Prompt Engineering Project – Personal Wealth Management App (Mint + Betterment)
 
 ## 📌 Executive Summary
 

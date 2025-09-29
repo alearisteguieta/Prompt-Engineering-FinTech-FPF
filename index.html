@@ -1,1 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Prompt Framework - FinTech AI Engineering</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: #f8fafc;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(180deg, #0a2540 0%, #1e5a8e 50%, #3d8bc9 100%);
+            padding: 80px 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #0f172a;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #1e5a8e;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .content-section:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .intro-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #475569;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid #1e5a8e;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(30,90,142,0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+
+        .feature-desc {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .doc-card {
+            background: linear-gradient(135deg, #1e5a8e 0%, #3d8bc9 100%);
+            padding: 25px;
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(30,90,142,0.3);
+        }
+
+        .doc-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .doc-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .tech-badge {
+            background: linear-gradient(135deg, #1e5a8e 0%, #3d8bc9 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        footer {
+            background: #0f172a;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #3d8bc9;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .architecture-section {
+            background: linear-gradient(135deg, rgba(30,90,142,0.05) 0%, rgba(61,139,201,0.05) 100%);
+            padding: 60px 20px;
+            margin: 60px 0;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="gradient-bg">
+        <div class="container">
+            <h1>Financial Prompt Framework</h1>
+            <p class="subtitle">Advanced AI-Powered Personal Wealth Management System</p>
+            <p style="font-size: 1.1rem; margin-bottom: 30px;">Multi-Layer Prompt Engineering for FinTech Applications</p>
+            
+            <div class="btn-group">
+                <a href="https://github.com/alearisteguieta/Prompt-Engineering-FinTech-FPF" class="btn btn-primary" target="_blank">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    View on GitHub
+                </a>
+                <a href="#documentation" class="btn btn-secondary">
+                    📄 Documentation
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <h2>Project Overview</h2>
+            <p class="intro-text">
+                This project demonstrates the integration of advanced AI language models (GPT-5, Gemini 2.5, Claude Sonnet 4) to build a sophisticated personal wealth management application combining multi-bank account aggregation with automated investment advisory capabilities. Developed as part of the Prompt Engineering internship at ZeTheta Algorithm Private Limited, this work showcases the practical application of the Financial Prompt Framework (FPF) and Multi-Layer Prompt Strategy.
+            </p>
+            <p class="intro-text">
+                The system architecture follows industry best practices for FinTech applications, implementing PCI DSS compliance, Zero Trust security principles, OAuth 2.0 authentication, and advanced financial algorithms including Modern Portfolio Theory (MPT) and Tax-Loss Harvesting optimization. The codebase provides a complete implementation spanning microservices architecture, backend financial logic, responsive frontend interfaces, and comprehensive security measures.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🏗️</div>
+                    <div class="feature-title">Microservices Architecture</div>
+                    <div class="feature-desc">Scalable, secure design with 99.99% uptime SLA, implementing strict network segmentation and Zero Trust security principles.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-title">AI-Powered Financial Logic</div>
+                    <div class="feature-desc">Advanced algorithms for expense categorization, Modern Portfolio Theory optimization, and automated tax-loss harvesting.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-title">Enterprise Security</div>
+                    <div class="feature-desc">Multi-factor authentication, end-to-end encryption (AES-256), secure key management with HSM integration, and fraud detection.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Interactive Dashboard</div>
+                    <div class="feature-desc">React-based responsive interface with real-time portfolio tracking, budget visualization, and goal progress indicators.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏦</div>
+                    <div class="feature-title">Bank Integration</div>
+                    <div class="feature-desc">Seamless connection to multiple financial institutions via Plaid API with secure OAuth 2.0 token management.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-title">Investment Optimization</div>
+                    <div class="feature-desc">Robo-advisory capabilities with portfolio rebalancing, risk assessment, and personalized investment recommendations.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="architecture-section">
+        <div class="container">
+            <h2>Multi-Layer Prompt Architecture</h2>
+            <p class="intro-text">
+                The project follows a systematic four-layer prompt engineering methodology designed specifically for complex FinTech applications:
+            </p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-title">Layer 1: Strategic Architecture</div>
+                    <div class="feature-desc">High-level system design including microservices architecture, database schemas, API specifications, and compliance framework.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">Layer 2: Backend Development</div>
+                    <div class="feature-desc">Implementation of financial logic modules including MPT engine, expense categorization, budget tracking, and tax optimization algorithms.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">Layer 3: Frontend Development</div>
+                    <div class="feature-desc">React-based user interface with interactive dashboards, real-time notifications, and mobile-responsive design.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">Layer 4: Integration & Security</div>
+                    <div class="feature-desc">Security implementation, fraud detection algorithms, compliance monitoring, and automated vulnerability scanning.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content-section" id="documentation">
+        <div class="container">
+            <h2>Documentation</h2>
+            <p class="intro-text">
+                Comprehensive documentation covering all aspects of the project, from architectural decisions to implementation details and security considerations.
+            </p>
+
+            <div class="docs-grid">
+                <a href="https://drive.google.com/file/d/19YJNMNpTjeKzJigVQ0QAKyaMJBX6LKy9/view?usp=drive_link" class="doc-card" target="_blank">
+                    <div class="doc-title">📋 Project Vision</div>
+                    <div class="doc-desc">Introduction to the Personal Wealth Management application, objectives, and technical approach.</div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/17AbBtOF-M2GyMTYtMeeBtakbFhBM8PyV/view?usp=drive_link" class="doc-card" target="_blank">
+                    <div class="doc-title">🎯 Methodology</div>
+                    <div class="doc-desc">Complete guide to the four-layer prompt engineering methodology with code examples and API responses.</div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1k5zxMsP89fiZqrVL9RkOUupWUtWNJK46/view?usp=drive_link" class="doc-card" target="_blank">
+                    <div class="doc-title">🗂️ Core Framework</div>
+                    <div class="doc-desc">Detailed task decomposition, workflow planning, and sequential prompt construction methodology.</div>
+                </a>
+            </div>
+
+            <div style="margin-top: 60px; text-align: center;">
+                <div style="max-width: 100%; overflow-x: auto; background: #1a1a1a; padding: 20px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                    <img src="https://i.ibb.co/0yqQgmLL/diagrams.png" alt="Architecture Diagram - Microservices Structure" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+                </div>
+                <p style="margin-top: 15px; color: #64748b; font-style: italic; font-size: 0.95rem;">Architecture Diagram (Mermaid, Portfolio View)</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h2>Technology Stack</h2>
+            <div class="tech-stack">
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">Flask/Django</span>
+                <span class="tech-badge">React</span>
+                <span class="tech-badge">PostgreSQL</span>
+                <span class="tech-badge">Redis</span>
+                <span class="tech-badge">Plaid API</span>
+                <span class="tech-badge">AWS</span>
+                <span class="tech-badge">Docker</span>
+                <span class="tech-badge">OAuth 2.0</span>
+                <span class="tech-badge">NumPy/Pandas</span>
+                <span class="tech-badge">Scikit-learn</span>
+                <span class="tech-badge">Recharts</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                <strong>Created by Alejandro Sanchez Aristeguieta</strong>
+            </p>
+            <p style="margin-bottom: 20px;">
+                This project is part of ongoing research and documentation in AI-powered FinTech applications<br>
+                Developed during the Prompt Engineering internship at ZeTheta Algorithm Private Limited
+            </p>
+            <p>
+                <a href="https://github.com/alearisteguieta/Prompt-Engineering-FinTech-FPF" target="_blank">GitHub Repository</a> | 
+                <a href="https://github.com/alearisteguieta" target="_blank">Author Profile</a>
+            </p>
+            <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.7;">
+                © 2025 Alejandro Sanchez Aristeguieta. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

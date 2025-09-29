@@ -8,9 +8,24 @@
 # 🏦 Prompt Engineering Project – Personal Wealth Management App (Mint + Betterment)
 
 ## 📌 Executive Summary
-This repository contains my first **Prompt Engineering project**, developed during my internship at **ZeTheta Algorithm Private Limited**.  
-The project demonstrates the application of advanced prompt engineering methodologies to design a **personal wealth management system** that integrates **multi-bank account aggregation (Mint)** with **automated investment advice (Betterment)**
+
+- This repository contains my first **Prompt Engineering project**, developed during my internship at **ZeTheta Algorithm Private Limited**.  
+- The project demonstrates the application of advanced prompt engineering methodologies to design a **personal wealth management system** that integrates
+- **multi-bank account aggregation (Mint)** with **automated investment advice (Betterment)**
 ---
+
+## 🔎 Repository Scope
+
+- This repository is a condensed, portfolio-style version of the full "Personal Wealth Management App (Mint + Betterment)" project. Its goal is to showcase the architecture, prompt methodology (FPF + Multi-Layer), and key artifacts in a concise manner.
+
+* Contents: curated excerpts, examples, and essential specifications.
+* Full Content: detailed documentation, full prompts, end-to-end traceability, tests, and results.
+* To review the full project documentation, visit:
+Full Documentation: [Public link to Notion or documentation site]
+* Notes:
+- This repository does not include sensitive data or credentials.
+- Some sections have been simplified for space, privacy, and pedagogical clarity.
+
 
 ## 🎯 Objectives
 - Apply the **Breakdown Problem Structure** to decompose a FinTech system into manageable components.
@@ -102,4 +117,3 @@ The document must include:
 ┗ 📂 assets
   ┗ 📜 diagrams.png
 ```
-

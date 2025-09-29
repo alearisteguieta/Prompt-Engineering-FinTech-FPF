@@ -1,123 +1,130 @@
-import os
-import time
-from typing import Any, Dict, List
-import joblib
+from future import annotations
+from typing import Dict, Tuple
 import numpy as np
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
-from sklearn.pipeline import Pipeline
---- Configuration and Mock Data Setup ---
-CATEGORIES: List[str] = [
-"Groceries", "Dining", "Utilities", "Rent", "Salary",
-"Transport", "Entertainment", "Health", "Investment", "Misc"
-]
-MODEL_PATH = "mock_expense_model.joblib"
-def generate_mock_model() -> Pipeline:
+from scipy.optimize import minimize
+--- Configuration Constants ---
+ANNUALIZATION_FACTOR = 252  # trading days/year
+RISK_FREE_RATE = 0.02       # annual risk-free rate (2%)
+def _annualize(mu_daily: pd.Series, cov_daily: pd.DataFrame) -> Tuple[pd.Series, pd.DataFrame]:
 """
-Generates and persists a simple mock TF-IDF + Logistic Regression pipeline for demo purposes.
-Keeps the example fast and deterministic for portfolio latency checks.
+Annualize daily mean returns and covariance.
 """
-print("Generating mock model for Expense Categorization...")
-data = {
-"description": [
-"Trader Joe's", "Starbucks Coffee", "Electricity Bill", "Monthly Rent Payment",
-"Uber Ride", "Netflix Subscription", "Hospital Visit Co-pay", "Monthly Dividend",
-"Whole Foods Market", "Local Diner Lunch", "Water & Sewage", "Bus Pass",
-"Movie Tickets", "Gym Membership", "Deposit - Paycheck"
-],
-"category": [
-"Groceries", "Dining", "Utilities", "Rent",
-"Transport", "Entertainment", "Health", "Investment",
-"Groceries", "Dining", "Utilities", "Transport",
-"Entertainment", "Health", "Salary"
-]
+mu_annual = mu_daily * ANNUALIZATION_FACTOR
+cov_annual = cov_daily * ANNUALIZATION_FACTOR
+return mu_annual, cov_annual
+def portfolio_metrics(
+weights: np.ndarray,
+mu_daily: pd.Series,
+cov_daily: pd.DataFrame,
+) -> Tuple[float, float, float]:
+"""
+Returns (annual_return, annual_volatility, sharpe_ratio) for given weights,
+using daily stats and annualizing internally.
+"""
+w = np.asarray(weights, dtype=float)
+mu_a, cov_a = _annualize(mu_daily, cov_daily)
+annual_return = float(np.sum(mu_a * w))
+annual_volatility = float(np.sqrt(w.T @ cov_a @ w))
+sharpe_ratio = (annual_return - RISK_FREE_RATE) / (annual_volatility + 1e-12)
+return annual_return, annual_volatility, sharpe_ratio
+def _neg_sharpe(
+weights: np.ndarray,
+mu_daily: pd.Series,
+cov_daily: pd.DataFrame,
+) -> float:
+return -portfolio_metrics(weights, mu_daily, cov_daily)[2]
+def _port_vol(
+weights: np.ndarray,
+mu_daily: pd.Series,
+cov_daily: pd.DataFrame,
+) -> float:
+return portfolio_metrics(weights, mu_daily, cov_daily)[1]
+def optimize_portfolio(returns_df: pd.DataFrame) -> Dict[str, Dict[str, object]]:
+"""
+Modern Portfolio Theory optimization (Max Sharpe and Min Vol).
+Input: daily returns for each asset (DataFrame with columns as tickers).
+Output: dict with metrics and weights for both portfolios.
+"""
+if returns_df.empty:
+raise ValueError("Input returns DataFrame cannot be empty.")
+num_assets = returns_df.shape[1]
+mu_daily = returns_df.mean()
+cov_daily = returns_df.cov()
+constraints = ({"type": "eq", "fun": lambda w: np.sum(w) - 1.0},)
+bounds = tuple((0.0, 1.0) for _ in range(num_assets))
+w0 = np.full(shape=(num_assets,), fill_value=1.0 / num_assets, dtype=float)
+1) Max Sharpe
+res_max = minimize(
+_neg_sharpe,
+w0,
+args=(mu_daily, cov_daily),
+method="SLSQP",
+bounds=bounds,
+constraints=constraints,
+)
+2) Min Vol
+res_min = minimize(
+_port_vol,
+w0,
+args=(mu_daily, cov_daily),
+method="SLSQP",
+bounds=bounds,
+constraints=constraints,
+)
+w_max = res_max.x
+w_min = res_min.x
+m_max = portfolio_metrics(w_max, mu_daily, cov_daily)
+m_min = portfolio_metrics(w_min, mu_daily, cov_daily)
+assets = returns_df.columns.tolist()
+return {
+"max_sharpe": {
+"return": m_max[0],
+"volatility": m_max[1],
+"sharpe_ratio": m_max[2],
+"weights": dict(zip(assets, np.round(w_max, 4))),
+},
+"min_volatility": {
+"return": m_min[0],
+"volatility": m_min[1],
+"sharpe_ratio": m_min[2],
+"weights": dict(zip(assets, np.round(w_min, 4))),
+},
 }
-df = pd.DataFrame(data)
-pipeline: Pipeline = Pipeline(
-steps=[
-("tfidf", TfidfVectorizer(stop_words="english", max_features=1000)),
-liblinear supports predict_proba and n_jobs
-("clf", LogisticRegression(solver="liblinear", random_state=42, n_jobs=-1))
-]
-)
-pipeline.fit(df["description"], df["category"])
-joblib.dump(pipeline, MODEL_PATH)
-print(f"Mock model saved as '{MODEL_PATH}'")
-return pipeline
-def load_or_create_model() -> Pipeline:
+def run_mpt_example(seed: int = 42) -> None:
+"""
+Generates mock daily returns for 4 assets and runs the optimizer.
+Keeps output human-readable for the portfolio repo.
+"""
+np.random.seed(seed)
+assets = ["SPY", "QQQ", "GLD", "BND"]
+data = {
+a: np.random.normal(loc=0.0005, scale=0.015, size=100)
+for a in assets
+}
+returns_df = pd.DataFrame(data)
+print("--- Mock Daily Returns Data (head) ---")
+print(returns_df.head())
 try:
-model = joblib.load(MODEL_PATH)
-print("Pre-trained mock model loaded.")
-return model
-except FileNotFoundError:
-return generate_mock_model()
-class ExpenseCategorizationEngine:
-"""
-ML service for categorizing financial transactions.
-Designed for low-latency inference (Target: < 500 ms p95) as defined in the docs.
-"""
-def init(self, model: Pipeline):
-self.model = model
-self.categories = CATEGORIES
-@staticmethod
-def preprocess_data(transaction: Dict[str, Any]) -> str:
-"""
-Minimal text normalization to keep the example simple and fast.
-"""
-description = str(transaction.get("description", "")).lower().strip()
-return description.replace("purchase at", "").replace("online payment", "")
-def categorize_transaction(self, transaction: Dict[str, Any]) -> Dict[str, Any]:
-"""
-Returns the transaction with predicted_category, confidence_score, latency_ms.
-"""
-start = time.perf_counter()
-processed = self.preprocess_data(transaction)
-if not processed:
-transaction["predicted_category"] = "Uncategorized"
-transaction["confidence_score"] = 0.0
-transaction["latency_ms"] = 0.0
-return transaction
-try:
-pred = self.model.predict([processed])[0]
-proba = self.model.predict_proba([processed])[0]
-confidence = float(np.max(proba))
-transaction["predicted_category"] = str(pred)
-transaction["confidence_score"] = round(confidence, 4)
-except Exception as e:
-transaction["predicted_category"] = "System Error"
-transaction["confidence_score"] = 0.0
-print(f"Categorization error (id={transaction.get('id','N/A')}): {e}")
-latency_ms = (time.perf_counter() - start) * 1000.0
-transaction["latency_ms"] = round(float(latency_ms), 3)
-if latency_ms > 500:
-print(f"ALERT: latency {latency_ms:.3f} ms > 500 ms target")
-return transaction
+results = optimize_portfolio(returns_df)
+print("n✅ Optimization Complete.")
+print("n--- Max Sharpe Ratio Portfolio ---")
+max_s = results["max_sharpe"]
+print(f"Annualized Return: {max_s['return']:.2%}")
+print(f"Annualized Volatility: {max_s['volatility']:.2%}")
+print(f"Sharpe Ratio: {max_s['sharpe_ratio']:.4f}")
+print("Asset Weights:")
+for a, w in max_s["weights"].items():
+print(f"  {a}: {w:.2%}")
+print("n--- Minimum Volatility Portfolio ---")
+min_v = results["min_volatility"]
+print(f"Annualized Return: {min_v['return']:.2%}")
+print(f"Annualized Volatility: {min_v['volatility']:.2%}")
+print(f"Sharpe Ratio: {min_v['sharpe_ratio']:.4f}")
+print("Asset Weights:")
+for a, w in min_v["weights"].items():
+print(f"  {a}: {w:.2%}")
+except ValueError as e:
+print(f"Error during optimization: {e}")
 if name == "main":
-model = load_or_create_model()
-engine = ExpenseCategorizationEngine(model=model)
-print("n--- Expense Categorization Engine Demo ---")
-test_transactions: List[Dict[str, Any]] = [
-{"id": "t_001", "amount": -55.99, "date": "2025-09-29", "description": "Payment to Electric Co"},
-{"id": "t_002", "amount": 1500.00, "date": "2025-09-29", "description": "Deposit - September Salary"},
-{"id": "t_003", "amount": -12.50, "date": "2025-09-30", "description": "Lunch at Pizzeria"},
-{"id": "t_004", "amount": -450.00, "date": "2025-10-01", "description": "Roth IRA Contribution"},
-{"id": "t_005", "amount": -89.45, "date": "2025-10-02", "description": "Groceries at Safeway"},
-{"id": "t_006", "amount": -9.99, "date": "2025-10-03", "description": "Hulu Streaming Service"},
-]
-results: List[Dict[str, Any]] = [engine.categorize_transaction(tx) for tx in test_transactions]
-print("n--- Categorization Results ---")
-for r in results:
-print(
-f"ID: {r['id']} | Desc: '{r['description']:<28}' | "
-f"Pred: {r['predicted_category']:<14} | Conf: {r['confidence_score']:.2f} | "
-f"Latency: {r['latency_ms']:.3f} ms"
-)
-avg_latency = float(np.mean([r["latency_ms"] for r in results]))
-print("n--- Portfolio Metric Check ---")
-print(f"Average latency per transaction: {avg_latency:.3f} ms")
-print("OK: < 500 ms target" if avg_latency < 500 else "WARN: >= 500 ms target")
-Optional cleanup for demo
-if os.path.exists(MODEL_PATH):
-os.remove(MODEL_PATH)
-print(f"nCleaned up '{MODEL_PATH}'.")
+run_mpt_example()

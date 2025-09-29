@@ -3,7 +3,7 @@
 ## Layer 1 – Strategic (Master)
 **Objective**: Define scope, high-level architecture, technology stack.  
 **Prompt Example**: Master Architecture FPF.  
-**Deliverables**: `System_Architecture.md`, `API_Specifications.json`, `Base_DB_Schema.sql`:contentReference[oaicite:14]{index=14}.  
+**Deliverables**: `System_Architecture.md`, `API_Specifications.json`, `Base_DB_Schema.sql`  
 
 ---
 
@@ -23,7 +23,7 @@
 - Security Implementation (MFA, Encryption)  
 - Test Generation (unit tests)  
 - AWS/Terraform Configuration  
-**Deliverables**: Test scripts, infrastructure configs, security functions:contentReference[oaicite:15]{index=15}.  
+**Deliverables**: Test scripts, infrastructure configs, security functions.  
 
 ---
 
@@ -32,4 +32,4 @@
 2. Backend Logic (MPT → Tax-Loss)  
 3. Security Implementation  
 4. Validation & Frontend  
-5. Deployment:contentReference[oaicite:16]{index=16}  
+5. Deployment  

@@ -113,7 +113,3 @@ LAT[/"p95: Categorization < 500 ms"/]
 SLA -.-> APIGW
 LAT -.-> ExpenseML
 ```
-
-Export tip
-
-- To include a static image in docs/System_[Architecture.md](http://Architecture.md), export this Mermaid diagram as PNG and save it as assets/diagrams.png. Then link to it from System_[Architecture.md](http://Architecture.md) so readers can see the visual without Mermaid rendering support.[[6]](https://raw.githubusercontent.com/alearisteguieta/Prompt-Engineering-FinTech-FPF/main/docs/System_Architecture.md)

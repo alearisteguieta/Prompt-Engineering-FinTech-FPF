@@ -38,7 +38,7 @@ Reporting a Vulnerability
 
 - Please do not open a public Issue for security reports.
 - Contact the maintainer privately:
-    - Email: [venezuelagamingrepublic@gmail.com](mailto:venezuelagamingrepublic@gmail.com)
+    - Email: [aristeguieta88@gmail.com](mailto:aristeguieta88@gmail.com)
     - Or open a blank Issue titled “Security Report” asking for a private contact channel (no details in public).
 - Include:
     - A clear description of the issue and potential impact

@@ -116,4 +116,8 @@ The document must include:
 ┃ ┗ 📜 scalability_notes.md
 ┗ 📂 assets
   ┗ 📜 diagrams.png
+┣ 📜 CONTRIBUTING.md
+┃ 📜 SECURITY.md
+┃ 📜 CODE_OF_CONDUCT.md
+┃ 📜 PULL_REQUEST_TEMPLATE.md
 ```
